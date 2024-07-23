@@ -1,0 +1,27 @@
+name: Run Unit Tests with Nose
+
+# Run on push events to the main branch
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'  # Or a specific version like '3.9'
+
+      - name: Install Nose
+        run: pip install nose
+
+      - name: Run Unit Tests
+        run: |
+          # Assuming tests are in a folder named 'tests'
+          nose tests
+
