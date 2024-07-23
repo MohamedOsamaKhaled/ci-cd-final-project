@@ -1,0 +1,40 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: nose-test-task
+
+spec:
+  # Optional description for the task
+  description: This task runs unit tests using Nose.
+
+  # Define the steps for the task
+  steps:
+    - name: install-dependencies
+      # Use an image with Python and package management tools
+      image: python:3.9  # Adjust Python version as needed
+      script: |
+        # Install Nose and any other required dependencies
+        pip install nose
+
+    - name: run-tests
+      # Use the same image as the previous step for consistency
+      image: python:3.9  # Adjust Python version as needed
+      workingDir: $(inputs.workspace)  # Use workspace for test files
+      script: |
+        # Run Nose tests with potential options
+        nose --with-coverage $(inputs.test-args) tests
+  
+  # Input parameters (optional)
+  inputs:
+    - name: workspace
+      type: string
+      description: Path to the workspace containing test files
+    - name: test-args
+      type: string
+      description: Optional arguments to pass to Nose
+
+  # Optional outputs (if needed)
+  # outputs:
+  #   - name: test-results  # Example output for test results
+  #     type: string
+  #     description: Path to generated test reports
