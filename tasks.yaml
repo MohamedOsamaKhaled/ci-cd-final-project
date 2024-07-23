@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: cleanup-task
+
+spec:
+  # Optional description for the task
+  description: This task performs basic cleanup actions.
+
+  # Define the steps for the task
+  steps:
+    - name: delete-resources
+      # Use an image with tools for resource deletion (e.g., kubectl)
+      image: ubuntu
+      script: |
+        # Replace the following with commands specific to your cleanup needs
+        # Example: Deleting a Kubernetes deployment
+        kubectl delete deployment my-deployment
+
+        # Example: Deleting a Persistent Volume Claim (PVC)
+        kubectl delete pvc my-pvc
