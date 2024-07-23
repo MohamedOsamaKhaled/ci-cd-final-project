@@ -1,0 +1,25 @@
+name: Lint with Flake8
+
+# Run on push events to the main branch
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'  # Or a specific version like '3.9'
+
+      - name: Install Flake8
+        run: pip install flake8
+
+      - name: Lint with Flake8
+        run: |
+          flake8 .
